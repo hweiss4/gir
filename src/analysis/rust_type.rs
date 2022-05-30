@@ -254,7 +254,7 @@ impl<'env> RustTypeBuilder<'env> {
         let mut skip_option = false;
         let type_ = self.env.library.type_(self.type_id);
         let mut rust_type = match *type_ {
-            Basic(fund) => {
+            Basic(ref fund) => {
                 match fund {
                     None => err("()"),
                     Boolean | Bool => ok("bool"),
@@ -314,6 +314,7 @@ impl<'env> RustTypeBuilder<'env> {
                     Type => ok_and_use(&use_glib_type(self.env, "types::Type")),
                     Char => ok_and_use(&use_glib_type(self.env, "Char")),
                     UChar => ok_and_use(&use_glib_type(self.env, "UChar")),
+                    Vulkan(name) => ok_and_use(&format!("ash::vk::{}", name)),
                     Unsupported => err("Unsupported"),
                     _ => err(&format!("Basic: {fund:?}")),
                 }

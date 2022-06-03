@@ -82,7 +82,7 @@ impl ConversionType {
                 IntPtr => Self::Direct,
                 UIntPtr => Self::Direct,
                 Bool => Self::Direct,
-                Vulkan(_) => Self::Direct,
+                Typedef(_) => Self::Direct,
                 Unsupported => Self::Unknown,
             },
             Alias(alias) if alias.c_identifier == "GQuark" => Self::Scalar,

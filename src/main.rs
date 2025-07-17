@@ -148,7 +148,7 @@ fn main() -> Result<(), String> {
 
     {
         let _watcher = statistics.enter("Preprocessing");
-        library.preprocessing(cfg.work_mode);
+        library.preprocessing(&cfg);
     }
 
     {

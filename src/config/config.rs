@@ -118,6 +118,7 @@ pub struct Config {
     pub extra_versions: Vec<Version>,
     pub lib_version_overrides: HashMap<Version, Version>,
     pub feature_dependencies: HashMap<Version, Vec<String>>,
+    pub custom_namespace_mappings: HashMap<String, String>,
     /// An url that will be inserted into the docs as link that links
     /// to another doc source, for example when builds on docs.rs
     /// are limited due to license issues.
@@ -327,6 +328,17 @@ impl Config {
             None => false,
         };
 
+        // TODO handle errors
+        let custom_namespace_mappings = match toml.lookup("custom_namespace_mappings") {
+            Some(v) => v
+                .as_table()
+                .unwrap()
+                .iter()
+                .map(|(k, v)| (k.to_string(), v.as_str().unwrap().to_string()))
+                .collect::<HashMap<_, _>>(),
+            None => HashMap::new(),
+        };
+
         let extra_versions = read_extra_versions(&toml)?;
         let lib_version_overrides = read_lib_version_overrides(&toml)?;
         let feature_dependencies = read_feature_dependencies(&toml)?;
@@ -358,6 +370,7 @@ impl Config {
             lib_version_overrides,
             feature_dependencies,
             external_docs_url,
+            custom_namespace_mappings,
         })
     }
 

@@ -20,7 +20,7 @@ mod codegen;
 mod config;
 mod consts;
 mod custom_type_glib_priority;
-mod custom_vulkan_namespace;
+mod custom_namespace;
 mod env;
 mod file_saver;
 pub mod fmt;
